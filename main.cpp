@@ -1,8 +1,24 @@
-#include "carddeck.h"
+#include "cardgame.h"
 
 int main()
 {
-	auto deck = CardDeck::Stack<Card::Card>();
+	Cardgame::StartGame();
+
+	while (Cardgame::gameRunning)
+	{
+		Cardgame::ShuffleDeck();
+
+		for(int i = 0; i < Cardgame::players.size - 1; i++)
+		{
+			Cardgame::DrawCard(Cardgame::players.at(i));
+		}
+
+		Cardgame::CompareCards();
+		Cardgame::PrintScores();
+		Cardgame::CleanUp();
+	}
+
+	Cardgame::EndGame();
 
 	return 0;
 }
