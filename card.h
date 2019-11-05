@@ -36,5 +36,13 @@ namespace Card
 			return 0;
 		}
 
+		bool operator<(const Card& other) const
+		{
+			value < other.value ? true : value == other.value ? suit < other.suit ? true : false : false;	
+		}
+		bool operator>(const Card& other) const
+		{
+			return other < *this;
+		}
 	};
 }

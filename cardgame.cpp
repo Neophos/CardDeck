@@ -14,16 +14,7 @@ void Cardgame::StartGame()
 
 void Cardgame::PrepareDeck()
 {
-	// Skapa kortleken, 13 av varje kort av de fyra färgerna
-	for (int i = 0; i < 4; i++)
-	{
-		for (int k = 1; k <= 13; k++)
-		{
-			deck.push(std::make_unique<Card::Card>((Card::Suit)(i), k));
-		}
-	}
 
-	int g = 1;
 }
 
 void Cardgame::ShuffleDeck()
@@ -33,33 +24,40 @@ void Cardgame::ShuffleDeck()
 
 void Cardgame::DrawCard(Player::Player p)
 {
-	p.heldCard = deck.pop();
+	p.heldCard = deck.pop().get();
 }
 // Jämför kort. Returnera spelaren som vann
 Player::Player Cardgame::CompareCards()
 {
-	Player::Player winningPlayer;
+	auto winner = Player::Player();
 
-	for (int i = 0; i < players.size - 1; i++)
+	for (auto p : players)
 	{
-
+		if (p.heldCard > winner.heldCard)
+		{
+			winner = p;
+		}
 	}
+
+	return winner;
 }
 
 void Cardgame::PrintScores()
 {
-	for (int i = 0; i < players.size - 1; i++)
+	for (auto p : players)
 	{
-		players.at(i).PrintScore();
+		p.PrintScore();
 	}
 }
 
 void Cardgame::CleanUp()
 {
-	for (int i = 0; i < players.size - 1; i++)
+	for (auto p : players)
 	{
-		deck.push(players.at(i).heldCard);
+		p.heldCard = NULL;
 	}
+
+	deck.cleanUp();
 }
 
 void Cardgame::EndGame()
@@ -67,13 +65,13 @@ void Cardgame::EndGame()
 	auto temp = 0;
 	Player::Player winner;
 	// Skriv ut alla spelares poäng, och spara högsta poängen
-	for (int i = 0; i < players.size - 1; i++)
+	for (auto p : players)
 	{
-		players.at(i).PrintScore();
+		p.PrintScore();
 
-		if (temp < players.at(i).score)
+		if (temp < p.score)
 		{
-			winner = players.at(i);
+			winner = p;
 		}
 	}
 

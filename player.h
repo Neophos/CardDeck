@@ -9,7 +9,7 @@ namespace Player
 	{
 		int score;
 		std::string name;
-		Card::Card heldCard;
+		Card::Card* heldCard;
 
 		void PrintScore();
 	};
