@@ -8,22 +8,21 @@ namespace CardDeck
 	template <typename T, size_t U>
 	struct Stack {
 	public:
-		// Klassiska egenskaper hos en stack
+		// Några klassiska egenskaper hos en stack, samt vissa unika för typen
 		Stack();
 		T pop();
 		T peek();
-		void push(T&& element);
+		void push(T*);
 		int size();
-		void sort();
 		void randomise();
-		std::array<T, U> getDeck();
+		std::array<T, U> getStack();
 		void cleanUp();
 
 	private:
 		std::array<T, U> _d;
-		const void* firstElement;
-		void* lastElement;
-		const void* reserve;
+		const T* firstElement;
+		T* lastElement;
+		const T* reserve;
 	};
 
 	// Stacken består av tre iteratorer, som pekar på början, slutet och slutet på allokeringsrymden
@@ -37,7 +36,7 @@ namespace CardDeck
 	template <typename T, size_t U>
 	T Stack<T, U>::pop()
 	{
-		auto temp = (int*)lastElement--;
+		auto temp = *lastElement;
 
 		return temp;
 	}
@@ -51,9 +50,11 @@ namespace CardDeck
 
 	// Lägg till ett element
 	template <typename T, size_t U>
-	void Stack<T, U>::push(T&& element)
+	void Stack<T, U>::push(T* element)
 	{
-		// TODO
+		lastElement++;
+
+		*lastElement = *element;
 	}
 
 	// Returnera storleken i element på högen
@@ -61,13 +62,6 @@ namespace CardDeck
 	int Stack<T, U>::size()
 	{
 		return U;
-	}
-
-	// Sortera högen enligt new deck order som Bicycle använder
-	template <typename T, size_t U>
-	void Stack<T, U>::sort()
-	{
-		// TODO
 	}
 
 	// Blanda högen
@@ -79,7 +73,7 @@ namespace CardDeck
 
 	// Returnera objektet i sig
 	template <typename T, size_t U>
-	std::array<T, U> Stack<T, U>::getDeck()
+	std::array<T, U> Stack<T, U>::getStack()
 	{
 		return _d;
 	}
@@ -88,7 +82,7 @@ namespace CardDeck
 	template <typename T, size_t U>
 	void Stack<T, U>::cleanUp()
 	{
-		lastElement = reserve;
+
 	}
 }
 

@@ -3,6 +3,7 @@
 // Definitionen av ett kort
 namespace Card
 {
+	// Färger, lägre är bättre
 	enum class Suit
 	{
 		SPADES = 0,
@@ -16,33 +17,18 @@ namespace Card
 		Suit suit;
 		int value;
 
+		// En vanlig och en default constructor
 		Card(Suit s, int v);
 		Card();
 
 		// Jämförelseoperator för att lätt jämföra korten och avgöra vilket som är värt mest
-		friend bool operator> (const Card& lhs, const Card& rhs)
+		friend bool operator<(const Card& lhs, const Card& rhs)
 		{
-			if (lhs.value > rhs.value)
-			{
-				return 1;
-			}
-			else if (lhs.value == rhs.value)
-			{
-				if (lhs.suit < rhs.suit)
-				{
-					return 1;
-				}
-			}
-			return 0;
+			lhs.value < rhs.value ? true : lhs.value == rhs.value ? lhs.suit < rhs.suit ? true : false : false;	
 		}
-
-		bool operator<(const Card& other) const
-		{
-			value < other.value ? true : value == other.value ? suit < other.suit ? true : false : false;	
-		}
-		bool operator>(const Card& other) const
-		{
-			return other < *this;
-		}
+		//friend bool operator>(const Card& lhs, const Card& rhs)
+		//{
+		//	return rhs < *lhs;
+		//}
 	};
 }

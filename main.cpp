@@ -8,12 +8,12 @@ int main()
 	{
 		Cardgame::ShuffleDeck();
 
-		for(int i = 0; i < Cardgame::players.size - 1; i++)
+		for(int i = 0; i < Cardgame::GetNumberOfPlayers(); i++)
 		{
-			Cardgame::DrawCard(Cardgame::players.at(i));
+			Cardgame::DrawCard(Cardgame::players[i]);
 		}
 
-		Cardgame::CompareCards();
+		Cardgame::AddScore(Cardgame::CompareCards());
 		Cardgame::PrintScores();
 		Cardgame::CleanUp();
 	}
