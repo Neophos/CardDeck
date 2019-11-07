@@ -16,5 +16,6 @@ namespace Player
 		Player();
 
 		void PrintScore();
+		void PrintCard();
 	};
 }

@@ -78,6 +78,9 @@ void Cardgame::AddPlayers()
 void Cardgame::DrawCard(Player::Player p)
 {
 	p.heldCard = deck.pop();
+
+	std::cout << p.name << " drew the card ";
+	p.PrintCard();
 }
 // Jämför kort. Returnera spelaren som vann
 Player::Player Cardgame::CompareCards()

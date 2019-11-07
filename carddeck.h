@@ -28,7 +28,7 @@ namespace CardDeck
 
 	// Stacken består av tre iteratorer, som pekar på början, slutet och slutet på allokeringsrymden
 	template <typename T, size_t U>
-	Stack<T, U>::Stack() : firstElement(&_d.front()), lastElement(&_d.front()), reserve(&_d.back())
+	Stack<T, U>::Stack() : _d(), firstElement(&_d.front()), lastElement(&_d.front()), reserve(&_d.back())
 	{
 		
 	}
@@ -37,11 +37,9 @@ namespace CardDeck
 	template <typename T, size_t U>
 	T* Stack<T, U>::pop()
 	{
-		auto temp = lastElement;
-
 		lastElement -= sizeof(int);
 
-		return temp;
+		return lastElement;
 	}
 
 	// Titta på översta elementet utan att ta bort det

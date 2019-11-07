@@ -26,9 +26,5 @@ namespace Card
 		{
 			lhs.value < rhs.value ? true : lhs.value == rhs.value ? lhs.suit < rhs.suit ? true : false : false;	
 		}
-		//friend bool operator>(const Card& lhs, const Card& rhs)
-		//{
-		//	return rhs < *lhs;
-		//}
 	};
 }
