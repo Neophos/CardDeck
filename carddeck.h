@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <iterator>
 
 namespace CardDeck
 {
@@ -10,8 +11,8 @@ namespace CardDeck
 	public:
 		// Några klassiska egenskaper hos en stack, samt vissa unika för typen
 		Stack();
-		T pop();
-		T peek();
+		T* pop();
+		T* peek();
 		void push(T*);
 		int size();
 		void randomise();
@@ -20,9 +21,9 @@ namespace CardDeck
 
 	private:
 		std::array<T, U> _d;
-		const T* firstElement;
+		const void* firstElement;
 		T* lastElement;
-		const T* reserve;
+		const void* reserve;
 	};
 
 	// Stacken består av tre iteratorer, som pekar på början, slutet och slutet på allokeringsrymden
@@ -34,27 +35,28 @@ namespace CardDeck
 
 	// Genom att flytta slutiteratorn kan vi simulera att den statiska arrayen minskar i storlek
 	template <typename T, size_t U>
-	T Stack<T, U>::pop()
+	T* Stack<T, U>::pop()
 	{
-		auto temp = *lastElement;
+		auto temp = lastElement;
+
+		lastElement -= sizeof(int);
 
 		return temp;
 	}
 
 	// Titta på översta elementet utan att ta bort det
 	template <typename T, size_t U>
-	T Stack<T, U>::peek()
+	T* Stack<T, U>::peek()
 	{
-		return *lastElement;
+		return &lastElement;
 	}
 
 	// Lägg till ett element
 	template <typename T, size_t U>
 	void Stack<T, U>::push(T* element)
 	{
-		lastElement++;
-
 		*lastElement = *element;
+		lastElement += 1;
 	}
 
 	// Returnera storleken i element på högen

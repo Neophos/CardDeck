@@ -4,13 +4,13 @@ int main()
 {
 	Cardgame::StartGame();
 
-	while (Cardgame::gameRunning)
+	while (Cardgame::GetGameRunning())
 	{
 		Cardgame::ShuffleDeck();
 
 		for(int i = 0; i < Cardgame::GetNumberOfPlayers(); i++)
 		{
-			Cardgame::DrawCard(Cardgame::players[i]);
+			Cardgame::DrawCard(Cardgame::GetPlayer(i));
 		}
 
 		Cardgame::AddScore(Cardgame::CompareCards());

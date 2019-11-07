@@ -15,17 +15,25 @@ void Cardgame::StartGame()
 
 	gameRunning = true;
 }
-
+// Eventuella förberedelser som måste göras på leken
 void Cardgame::PrepareDeck()
 {
-
+	for (int i = 0; i < 4; i++)
+	{
+		for (int k = 1; k <= 13; k++)
+		{
+			deck.push(new Card::Card((Card::Suit)i, k));
+		}
+	}
 }
 
+// Blanda leken
 void Cardgame::ShuffleDeck()
 {
 	deck.randomise();
 }
 
+// Skapa spelare och lägg dom i container
 void Cardgame::AddPlayers()
 {
 	auto numPlayers = 0;
@@ -35,11 +43,23 @@ void Cardgame::AddPlayers()
 
 	while (numPlayers < 2)
 	{
+		// Sanity check på att det bara matas in siffror
 		std::cout << "How many players do you want?" << std::endl;
-		std::cin >> numPlayers;
-		std::cout << std::endl;
+		while (!(std::cin >> numPlayers)) {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << "Honestly. How many players?" << std::endl;
+		}
+
+		if (numPlayers < 2)
+		{
+			std::cout << "I said at least two players." << std::endl;
+		}
 	}
 
+	std::cout << "Number of players will be " << numPlayers << std::endl;
+
+	// Skapa alla spelare
 	for(int i = 0; i < numPlayers; i++)
 	{
 		std::cout << "What name does this player have?" << std::endl;
@@ -48,15 +68,16 @@ void Cardgame::AddPlayers()
 
 		std::cin >> name;
 
-		Player::Player::Player(name);
+		players.emplace_back(Player::Player::Player(name));
 
 		std::cout << std::endl << name << " added to the game!" << std::endl;
 	}
 }
 
+// Ge en spelare ett kort
 void Cardgame::DrawCard(Player::Player p)
 {
-	p.heldCard = deck.pop().get();
+	p.heldCard = deck.pop();
 }
 // Jämför kort. Returnera spelaren som vann
 Player::Player Cardgame::CompareCards()
@@ -107,6 +128,8 @@ void Cardgame::CleanUp()
 	}
 
 	deck.cleanUp();
+
+	AskForRematch();
 }
 
 // Avsluta spelet, skriv ut vinnaren
@@ -126,4 +149,34 @@ void Cardgame::EndGame()
 	}
 
 	std::cout << std::endl << winner.name << " is the winner of the game!" << std::endl;
+}
+
+// Se ifall spelarna vill fortsätta
+void Cardgame::AskForRematch()
+{
+	std::cout << "Do you wish to play another round? Yes/No" << std::endl;
+
+	std::string temp;
+
+	do
+	{
+		std::cin >> temp;
+		std::transform(temp.begin(), temp.end(), temp.begin(), std::tolower);
+		std::cout << std::endl;
+	} while ((temp != "yes" || temp != "no"));
+
+	if (temp == "no")
+	{
+		Cardgame::gameRunning = false;
+	}
+}
+
+bool Cardgame::GetGameRunning()
+{
+	return gameRunning;
+}
+
+Player::Player Cardgame::GetPlayer(int pos)
+{
+	return players.at(pos);
 }

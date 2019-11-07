@@ -23,10 +23,13 @@ namespace Cardgame
 	int GetNumberOfPlayers();
 	void PrintScores();
 	void CleanUp();
+	void AskForRematch();
+	bool GetGameRunning();
+	Player::Player GetPlayer(int);
 
 
 	// En stack av 52 kort
-	static auto deck = CardDeck::Stack<std::unique_ptr<Card::Card>, 52>();
+	static auto deck = CardDeck::Stack<Card::Card, 52>();
 
 	// Stöd för arbiträrt många spelare ifall man vill
 	static std::vector<Player::Player> players;
