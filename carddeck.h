@@ -12,9 +12,9 @@ namespace CardDeck
 		// Några klassiska egenskaper hos en stack, samt vissa unika för typen
 		Stack();
 		T* pop();
-		T* peek();
+		const T& peek() const;
 		void push(T*);
-		int size();
+		int size() const;
 		void randomise();
 		std::array<T, U> getStack();
 		void cleanUp();
@@ -37,14 +37,14 @@ namespace CardDeck
 	template <typename T, size_t U>
 	T* Stack<T, U>::pop()
 	{
-		lastElement -= sizeof(int);
+		lastElement--;
 
 		return lastElement;
 	}
 
 	// Titta på översta elementet utan att ta bort det
 	template <typename T, size_t U>
-	T* Stack<T, U>::peek()
+	const T& Stack<T, U>::peek() const
 	{
 		return &lastElement;
 	}
@@ -54,12 +54,12 @@ namespace CardDeck
 	void Stack<T, U>::push(T* element)
 	{
 		*lastElement = *element;
-		lastElement += 1;
+		lastElement++;
 	}
 
 	// Returnera storleken i element på högen
 	template <typename T, size_t U>
-	int Stack<T, U>::size()
+	int Stack<T, U>::size() const
 	{
 		return U;
 	}

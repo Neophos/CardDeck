@@ -4,7 +4,7 @@
 namespace Card
 {
 	// Färger, lägre är bättre
-	enum class Suit
+	enum Suit
 	{
 		SPADES = 0,
 		HEARTS,
@@ -22,9 +22,14 @@ namespace Card
 		Card();
 
 		// Jämförelseoperator för att lätt jämföra korten och avgöra vilket som är värt mest
-		friend bool operator<(const Card& lhs, const Card& rhs)
+		bool operator<(const Card& rhs) const
 		{
-			lhs.value < rhs.value ? true : lhs.value == rhs.value ? lhs.suit < rhs.suit ? true : false : false;	
+			return value < rhs.value ? true : value == rhs.value ? suit > rhs.suit ? true : false : false;	
+		}
+
+		bool operator>(const Card& rhs) const
+		{
+			return rhs < *this;
 		}
 	};
 }

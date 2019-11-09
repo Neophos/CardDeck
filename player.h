@@ -12,10 +12,10 @@ namespace Player
 		std::string name;
 		Card::Card* heldCard;
 
-		Player(std::string);
+		Player(std::string name);
 		Player();
 
-		void PrintScore();
-		void PrintCard();
+		void PrintScore() const;
+		void PrintCard() const;
 	};
 }

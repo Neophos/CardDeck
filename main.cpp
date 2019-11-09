@@ -13,7 +13,7 @@ int main()
 			Cardgame::DrawCard(Cardgame::GetPlayer(i));
 		}
 
-		Cardgame::AddScore(Cardgame::CompareCards());
+		Cardgame::AddScore(const_cast<Player::Player*>(Cardgame::CompareCards()));
 		Cardgame::PrintScores();
 		Cardgame::CleanUp();
 	}

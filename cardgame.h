@@ -14,25 +14,25 @@ namespace Cardgame
 	void EndGame();
 	void PrepareDeck();
 	void ShuffleDeck();
-	void AddScore(Player::Player);
+	void AddScore(Player::Player*);
 	void AddPlayers();
 	// DrawCard riktar sig explicit till en spelare som får kortet
-	void DrawCard(Player::Player);
+	void DrawCard(Player::Player&);
 	// CompareCards returnerar den vinnande spelaren
-	Player::Player CompareCards();
+	const Player::Player* CompareCards();
 	int GetNumberOfPlayers();
 	void PrintScores();
 	void CleanUp();
 	void AskForRematch();
 	bool GetGameRunning();
-	Player::Player GetPlayer(int);
+	Player::Player& GetPlayer(int idx);
 
 
 	// En stack av 52 kort
-	static auto deck = CardDeck::Stack<Card::Card, 52>();
+	extern CardDeck::Stack<Card::Card, 52> deck;
 
 	// Stöd för arbiträrt många spelare ifall man vill
-	static std::vector<Player::Player> players;
+	extern std::vector<Player::Player> players;
 
-	static bool gameRunning;
+	extern bool gameRunning;
 }
